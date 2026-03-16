@@ -58,7 +58,7 @@ def calculate_perf_score(row):
         goals * goal_w +
         assists * assist_w +
         rating * rating_w
-    ) / minutes
+    )
 
     return score
 

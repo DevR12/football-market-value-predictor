@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_absolute_error
 
 df = pd.read_csv("data/features_players.csv")
@@ -9,11 +9,12 @@ features = df[
     [
         "overall_rating",
         "potential_rating",
-        "performance_score"
+        "age",
+        "goal_contribution"
     ]
 ]
 
-target = df["market_value_million_eur"]
+target = df["performance_score"]
 
 x_train, x_test, y_train, y_test = train_test_split(
     features,
@@ -22,29 +23,31 @@ x_train, x_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-model = LinearRegression()
-model.fit(x_train, y_train)
-
-coefficients = pd.Series(
-    model.coef_,
-    index=features.columns
+model = RandomForestRegressor(
+    n_estimators=600,
+    max_depth=16,
+    min_samples_split=4,
+    random_state=42
 )
-print("Linear Coefficients")
-print(coefficients.sort_values(ascending=False))
-print("\n")
+
+model.fit(x_train, y_train)
 
 predictions = model.predict(x_test)
 
-print("Model Evaluation")
-print(f"R2 Score: {r2_score(y_test, predictions):.4f}")
-print(f"MAE:      {mean_absolute_error(y_test, predictions):.4f} Million EUR")
-print("\n")
+print("Model Evaluation\n")
 
-df["predicted_market_value"] = model.predict(features)
-df["value_gap"] = df["predicted_market_value"] - df["market_value_million_eur"]
+print("R2 Score:", r2_score(y_test, predictions))
+print("MAE:", mean_absolute_error(y_test, predictions))
+
+df["predicted_performance"] = model.predict(features)
+
+df["value_efficiency"] = (
+    df["predicted_performance"] /
+    df["market_value_million_eur"]
+)
 
 undervalued_players = df.sort_values(
-    by="value_gap",
+    by="value_efficiency",
     ascending=False
 )
 
@@ -53,4 +56,4 @@ undervalued_players.to_csv(
     index=False
 )
 
-print("Successfully exported undervalued_players.csv")
+print("\nUndervalued players exported to outputs/undervalued_players.csv")
