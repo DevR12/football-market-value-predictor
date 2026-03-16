@@ -86,9 +86,7 @@ A custom performance metric was created that weights player actions differently 
 Example structure:
 
 performance_score =
-(goals × weight)
-+ (assists × weight)
-+ (rating × weight)
+(goals × weight) + (assists × weight) + (rating × weight)
 
 Different weights are used for attackers, midfielders, defenders, and goalkeepers.
 
