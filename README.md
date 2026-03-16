@@ -17,14 +17,37 @@ The project processes player statistics, engineers performance metrics, and rank
 
 The project follows a simple data analytics workflow:
 
-raw dataset ↓ data cleaning ↓ feature engineering ↓ SQL analytics queries ↓ value efficiency analysis ↓ undervalued player ranking
+raw dataset
+    ↓
+data cleaning
+    ↓
+feature engineering
+    ↓
+SQL analytics queries
+    ↓
+value efficiency analysis
+    ↓
+undervalued player ranking
 
 
 ---
 
 ## Repository Structure
 
-sports-analytics │ ├── data/ │   raw_players.csv │   clean_players.csv │   features_players.csv │ ├── scripts/ │   clean_data.py │   feature_engineering.py │   value_efficiency_analysis.py │ ├── sql/ │   analytics_queries.sql │ ├── outputs/ │   undervalued_players.csv │ └── README.md
+sports-analytics/
+├── data/
+│   ├── raw_players.csv
+│   ├── clean_players.csv
+│   └── features_players.csv
+├── scripts/
+│   ├── clean_data.py
+│   ├── feature_engineering.py
+│   └── second_analysis.py
+├── sql/
+│   └── analytics_queries.sql
+├── outputs/
+│   └── value_for_money_transfers.csv
+└── README.md
 
 
 ---
