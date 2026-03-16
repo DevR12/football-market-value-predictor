@@ -55,5 +55,3 @@ undervalued_players.to_csv(
     "outputs/undervalued_players.csv",
     index=False
 )
-
-print("\nUndervalued players exported to outputs/undervalued_players.csv")
